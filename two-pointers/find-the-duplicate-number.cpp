@@ -1,11 +1,12 @@
-#include <cstdlib>
-#include <ctime>
-
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        srand(static_cast<unsigned int>(time(0))); 
-        return rand() % (10) + 1;
-        
+        set<int> seen;
+        for (int i : nums) {
+            if (seen.contains(i)) {
+                return i;
+            }
+            seen.insert(i);
+        }
     }
 };
