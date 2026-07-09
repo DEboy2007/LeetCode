@@ -8,38 +8,39 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-using namespace std;
 
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        return carryOver(l1, l2, nullptr, nullptr, 0);
-    }
-
-    ListNode* carryOver(ListNode* num1, ListNode* num2, ListNode* result, ListNode* curr, int prevCarry) {
-        if (num1 == nullptr && num2 == nullptr && prevCarry == 0) {
-            return result;
+        // go from left to right, add both and send carryover
+        ListNode* p1 = l1;
+        ListNode* p2 = l2;
+        int carryover = 0;
+        ListNode* head = new ListNode(0);
+        ListNode* result = head;
+        while (p1 || p2) {
+            int curr = 0;
+            if (p1) {
+                curr += p1->val;
+                p1 = p1->next;
+            }
+            if (p2) {
+                curr += p2->val;
+                p2 = p2->next;
+            }
+            curr += carryover;
+            carryover = curr / 10;
+            ListNode* ts = new ListNode(curr % 10);
+            result->next = ts;
+            result = ts;
         }
-
-        int num1val = num1 != nullptr ? num1->val : 0;
-        int num2val = num2 != nullptr ? num2->val : 0;
-
-        if (curr == nullptr) {
-            curr = new ListNode();
-            result = curr;
-        } else {
-            curr->next = new ListNode();
-            curr = curr->next;
+        while (carryover != 0) {
+            ListNode* ts = new ListNode(carryover % 10);
+            result->next = ts;
+            result = ts;
+            carryover /= 10;
         }
-
-        curr->val = (num1val + num2val + prevCarry) % 10;
-        int carryVal = (num1val + num2val + prevCarry) / 10;
-        if (num1 != nullptr) {
-            num1 = num1->next;
-        }
-        if (num2 != nullptr) {
-            num2 = num2->next;
-        }
-        return carryOver(num1, num2, result, curr, carryVal);
+        return head->next;
+        
     }
 };
