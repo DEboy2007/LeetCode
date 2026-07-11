@@ -46,7 +46,7 @@ public:
                     oldToNew[n] = newN;
                     q.push(n);
                 }
-                curr->neighbors[i] = newN;
+                oldToNew[curr]->neighbors[i] = newN;
             }
         }
         return res;
