@@ -22,7 +22,7 @@ public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         priority_queue<ListNode*, vector<ListNode*>, CompareListNode> pq;
         for (ListNode* n : lists) {
-            pq.push(n);
+            if (n) pq.push(n);
         }
 
         ListNode* prev = nullptr;
