@@ -15,6 +15,7 @@ public:
             }
         }
         if (min0) return 0;
+        if (q.empty()) return -1;
         int mins = 0;
         pair<int, int> lastMinEnd = q.back();
         while (!q.empty()) {
@@ -29,7 +30,7 @@ public:
                 grid[x][y] = 2;
                 q.push_back({x, y});
             }
-            if (curr == lastMinEnd) {
+            if (curr == lastMinEnd && !q.empty()) {
                 mins++;
                 lastMinEnd = q.back();
             }
@@ -41,6 +42,6 @@ public:
                 }
             }
         }
-        return mins - 1;
+        return mins;
     }
 };
