@@ -8,7 +8,7 @@ public:
             gcds[i] = gcd(nums[i], mx);
         }
         sort(gcds.begin(), gcds.end());
-        int sum = 0;
+        long long sum = 0;
         int i = 0;
         int j = gcds.size() - 1;
         while (i < j) {
