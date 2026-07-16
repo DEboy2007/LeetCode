@@ -1,19 +1,30 @@
 class Solution {
 public:
     vector<string> findItinerary(vector<vector<string>>& tickets) {
-        unordered_map<string, set<string>> adjList;
+        unordered_map<string, vector<string>> adjList;
         for (auto& v : tickets) {
-            adjList[v[0]].insert(v[1]);
+            adjList[v[0]].push_back(v[1]);
         }
-        vector<string> result;
-        string currAirport = "JFK";
-        while (true) {
-            result.push_back(currAirport);
-            set<string>* st = &adjList[currAirport];
-            if (st->empty()) break;
-            currAirport = *st->begin();
-            st->erase(st->begin());
+        for (auto& [key, v] : adjList) {
+            sort(v.begin(), v.end());
         }
-        return result;
+        vector<string> currPath;
+        vector<string> circuit;
+        unordered_map<string, int> activeIndex;
+        currPath.push_back("JFK");
+
+        while (!currPath.empty()) {
+            string node = currPath.back();
+            if (adjList.contains(node) && activeIndex[node] < adjList[node].size()) {
+                string next = adjList[node][activeIndex[node]];
+                activeIndex[node]++;
+                currPath.push_back(next);
+            } else {
+                circuit.push_back(node);
+                currPath.pop_back();
+            }
+        }
+        reverse(circuit.begin(), circuit.end());
+        return circuit;
     }
 };
