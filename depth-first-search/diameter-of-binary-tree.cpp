@@ -9,19 +9,20 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
 class Solution {
 public:
     int diameterOfBinaryTree(TreeNode* root) {
-        int total = 0;
-        helper(root, total);
-        return total;
+        int diameter = 0;
+        height(root, diameter);
+        return diameter;
     }
 
-    int helper(const TreeNode* root, int &total) {
+    int height(TreeNode* root, int& diameter) {
         if (!root) return 0;
-        int hl = helper(root->left, total);
-        int hr = helper(root->right, total);
-        total = max(total, hl + hr);
-        return 1 + max(hl, hr);
+        int l = height(root->left, diameter);
+        int r = height(root->right, diameter);
+        diameter = max(diameter, l + r);
+        return 1 + max(l, r);
     }
 };
