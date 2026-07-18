@@ -13,33 +13,22 @@
 class Solution {
 public:
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        if (!subRoot) return true;
-        if (!root) return false;
-        stack<TreeNode*> st;
-        st.push(root);
-        while (!st.empty()) {
-            TreeNode* curr = st.top(); st.pop();
-            if (!curr) continue;
-            if (curr->val == subRoot->val) {
-                if (isEqual(curr, subRoot)) return true;
-            }
-            st.push(curr->left);
-            st.push(curr->right);
-        }
-        return false;
+        string r = "";
+        string s = "";
+        serialize(root, r);
+        serialize(subRoot, s);
+        return r.contains(s);
     }
 
-    bool isEqual(TreeNode* r1, TreeNode* r2) {
-        stack<pair<TreeNode*, TreeNode*>> st;
-        st.push({r1, r2});
-        while (!st.empty()) {
-            auto [n1, n2] = st.top(); st.pop();
-            if (!n1 && !n2) continue;
-            if (!n1 || !n2) return false;
-            if (n1->val != n2->val) return false;
-            st.push({n1->left, n2->left});
-            st.push({n1->right, n2->right});
+    void serialize(TreeNode* root, string& s) {
+        if (!root) {
+            s.push_back('#');
+            return;
         }
-        return true;
+        s += to_string(root->val);
+        s.push_back('l');
+        serialize(root->left, s);
+        s.push_back('r');
+        serialize(root->right, s);
     }
 };
