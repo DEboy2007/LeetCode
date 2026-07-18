@@ -25,7 +25,7 @@ public:
             s.push_back('#');
             return;
         }
-        s += to_string(root->val);
+        s += '(' + to_string(root->val) + ')';
         s.push_back('l');
         serialize(root->left, s);
         s.push_back('r');
