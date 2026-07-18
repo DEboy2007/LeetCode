@@ -20,7 +20,9 @@ public:
         while (!st.empty()) {
             TreeNode* curr = st.top(); st.pop();
             if (!curr) continue;
-            if (curr->val == subRoot->val && isEqual(curr, subRoot)) return true; 
+            if (curr->val == subRoot->val) {
+                if (isEqual(curr, subRoot)) return true;
+            }
             st.push(curr->left);
             st.push(curr->right);
         }
