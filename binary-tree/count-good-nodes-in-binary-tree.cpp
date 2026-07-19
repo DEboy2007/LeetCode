@@ -17,7 +17,7 @@ public:
         queue<pair<TreeNode*, int>> q;
         q.push({root, -10000000});
         while (!q.empty()) {
-            auto [curr, currMax] = q.front(); q.pop();
+            auto &[curr, currMax] = q.front(); q.pop();
             if (curr->val >= currMax) counter++;
             currMax = max(currMax, curr->val);
             if (curr->left) q.push({curr->left, currMax});
