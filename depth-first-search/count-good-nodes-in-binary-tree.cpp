@@ -15,7 +15,7 @@ public:
     int goodNodes(TreeNode* root) {
         int counter = 0;
         queue<pair<TreeNode*, int>> q;
-        q.push({root, -101});
+        q.push({root, -10000000});
         while (!q.empty()) {
             auto [curr, currMax] = q.front(); q.pop();
             if (curr->val >= currMax) counter++;
