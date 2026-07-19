@@ -14,15 +14,14 @@ class Solution {
 public:
     int goodNodes(TreeNode* root) {
         int counter = 0;
-        queue<pair<TreeNode*, int>> q;
-        q.push({root, -10000000});
-        while (!q.empty()) {
-            auto &[curr, currMax] = q.front();
+        stack<pair<TreeNode*, int>> st;
+        st.push({root, -10000000});
+        while (!st.empty()) {
+            auto [curr, currMax] = st.top(); st.pop();
             if (curr->val >= currMax) counter++;
             currMax = max(currMax, curr->val);
-            if (curr->left) q.push({curr->left, currMax});
-            if (curr->right) q.push({curr->right, currMax});
-            q.pop();
+            if (curr->left) st.push({curr->left, currMax});
+            if (curr->right) st.push({curr->right, currMax});
         }
         return counter;
         
