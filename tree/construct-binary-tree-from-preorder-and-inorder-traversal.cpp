@@ -13,23 +13,24 @@
 class Solution {
 private:
     int preIdx = 0;
+    int inIdx = 0;
     unordered_map<int, int> inorderIndex;
-    TreeNode* dfs(vector<int>& preorder, int l, int r) {
-        if (l > r) return nullptr;
-        int rootVal = preorder[preIdx];
+    TreeNode* dfs(vector<int>& preorder, vector<int>& inorder, int limit) {
+        if (preIdx >= preorder.size()) return nullptr;
+        if (inorder[inIdx] == limit) {
+            inIdx++;
+            return nullptr;
+        }
+
+        TreeNode* root = new TreeNode(preorder[preIdx]);
         preIdx++;
-        int mid = inorderIndex[rootVal];
-        TreeNode* root = new TreeNode(rootVal);
-        root->left = dfs(preorder, l, mid - 1);
-        root->right = dfs(preorder, mid + 1, r);
+        root->left = dfs(preorder, inorder, root->val);
+        root->right = dfs(preorder, inorder, limit);
         return root;
     }
 
 public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        for (int i = 0; i < inorder.size(); i++) {
-            inorderIndex[inorder[i]] = i;
-        }
-        return dfs(preorder, 0, inorder.size() - 1);
+        return dfs(preorder, inorder, INT_MAX);
     }
 };
