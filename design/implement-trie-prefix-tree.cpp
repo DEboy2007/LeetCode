@@ -22,7 +22,7 @@ private:
     TrieNode* root;
 
 public:
-    PrefixTree() {
+    Trie() {
         root = new TrieNode();
         root->end = true;
     }
