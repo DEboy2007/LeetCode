@@ -17,7 +17,7 @@ public:
     }
 };
 
-class PrefixTree {
+class Trie {
 private:
     TrieNode* root;
 
